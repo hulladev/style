@@ -1,0 +1,114 @@
+{
+  "name": "style",
+  "scripts": {
+    "lint": "turbo lint",
+    "build": "turbo build",
+    "test": "turbo test",
+    "dev": "turbo dev",
+    "prepare": "husky"
+  },
+  "author": {
+    "name": "Samuel Hulla",
+    "email": "hulla@hulla.dev",
+    "url": "https://hulla.dev"
+  },
+  "maintainers": [
+    "Samuel Hulla <hulla@hulla.dev>"
+  ],
+  "homepage": "https://hulla.dev/projects/api",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hulladev/api.git",
+    "directory": "packages/api"
+  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "devDependencies": {
+    "@changesets/cli": "^2.27.5",
+    "@eslint/js": "^9.5.0",
+    "@types/eslint__js": "^8.42.3",
+    "bunchee": "^5.2.1",
+    "commitizen": "^4.3.0",
+    "cz-emoji": "1.3.2-canary.2",
+    "eslint": "^9.5.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
+    "prettier": "^3.3.2",
+    "turbo": "^2.0.4",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.13.0"
+  },
+  "packageManager": "pnpm@9.4.0",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-emoji"
+    },
+    "cz-emoji": {
+      "skipScope": true,
+      "scopes": [
+        "package",
+        "examples",
+        "repo"
+      ],
+      "types": [
+        {
+          "emoji": "✅",
+          "code": ":white_check_mark: feat:",
+          "description": "a new functionality",
+          "name": "feat"
+        },
+        {
+          "emoji": "🐞",
+          "code": ":lady_beetle: fix:",
+          "description": "a bug fix",
+          "name": "fix"
+        },
+        {
+          "emoji": "🔧",
+          "code": ":wrench: update:",
+          "description": "a code change that neither fixes a bug nor adds a feature",
+          "name": "update"
+        },
+        {
+          "emoji": "📚",
+          "code": ":books: docs:",
+          "description": "documentations",
+          "name": "docs"
+        },
+        {
+          "emoji": "🧪",
+          "code": ":test_tube: tests:",
+          "description": "tests",
+          "name": "tests"
+        },
+        {
+          "emoji": "🪛",
+          "code": ":screwdriver: config:",
+          "description": "configuration files",
+          "name": "config"
+        },
+        {
+          "emoji": "🤖",
+          "code": ":robot: devops:",
+          "description": "ci/cd or other form of automation",
+          "name": "devops"
+        },
+        {
+          "emoji": "♻️",
+          "code": ":recycle: cleanup:",
+          "description": "code cleanup",
+          "name": "cleanup"
+        },
+        {
+          "emoji": "📦",
+          "code": ":package: release:",
+          "description": "new release bundle",
+          "name": "release"
+        }
+      ]
+    }
+  }
+}
