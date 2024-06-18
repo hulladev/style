@@ -1,0 +1,34 @@
+---
+import { vn } from '@/lib/style.ts'
+import type { VariantProps } from '@hulla/style'
+
+const style = vn({
+  base: 'base',
+  variants: {
+    primary: 'primary',
+    secondary: 'secondary'
+  },
+  defaultVariant: 'primary'
+})
+
+type Props = VariantProps<typeof style>
+const props = Astro.props
+---
+
+<button class={style(props)}><slot /></button>
+
+<style>
+  .primary {
+    color: greenyellow;
+  }
+  .secondary {
+    color: aquamarine;
+  }
+  .base {
+    border: 2px solid;
+    padding: 0.5rem;
+  }
+  .base:hover {
+    opacity: 0.8;
+  }
+</style>

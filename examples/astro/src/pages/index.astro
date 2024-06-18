@@ -1,0 +1,26 @@
+---
+import TailwindButton from "@/components/TailwindButton.astro"
+import Button from "@/components/button.astro"
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body class="bg-black/95 space-y-8">
+    <section class="border space-y-4 p-8 space-x-4">
+      <h3 class="text-white">Vanilla <code>{'<style>'}</code> tags</h3>
+      <Button>Primary button (default)</Button>
+      <Button variant="secondary">Secondary button</Button>
+    </section>
+    <section class="border space-y-4 p-8 space-x-4">
+      <h3 class="text-white">Tailwindcss</h3>
+      <TailwindButton>Primary button (default)</TailwindButton>
+      <TailwindButton variant="secondary">Secondary button</TailwindButton>
+    </section>
+	</body>
+</html>
