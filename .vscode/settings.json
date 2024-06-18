@@ -1,0 +1,19 @@
+{
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list",
+    "variants*",
+    "base*"
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    ["(?:vn|cn)\\(([^\\);]*)[\\);]", "[`'\"]([^'\"`,;]*)[`'\"]"],
+  ]
+}
