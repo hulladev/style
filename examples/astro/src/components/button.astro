@@ -2,7 +2,7 @@
 import { vn } from '@/lib/style.ts'
 import type { VariantProps } from '@hulla/style'
 
-const style = vn({
+const css = vn({
   base: 'base',
   variants: {
     primary: 'primary',
@@ -11,11 +11,11 @@ const style = vn({
   defaultVariant: 'primary'
 })
 
-type Props = VariantProps<typeof style>
+type Props = VariantProps<typeof css>
 const props = Astro.props
 ---
 
-<button class={style(props)}><slot /></button>
+<button class={css(props)}><slot /></button>
 
 <style>
   .primary {
