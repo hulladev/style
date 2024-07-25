@@ -1,3 +1,5 @@
+import type { HTMLAttributes } from "astro/types"
+
 export type Variants = Record<string, string>
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 export type Compose = <const CS extends any[] = ClassName[]>(...classes: CS) => string
@@ -15,9 +17,9 @@ export type Config<V extends Variants, DV extends keyof V, B extends string, C e
 
 export type Props<V extends Variants> = {
   variant?: keyof V
-  class?: string
-  className?: string
-  "class:list"?: string[]
+  class?: string | null
+  className?: string | null
+  "class:list"?: HTMLAttributes<"div">["class:list"]
 }
 
 type Incorrect<
