@@ -4,11 +4,15 @@ import type { VariantProps } from '@hulla/style'
 
 const css = vn({
   base: 'base',
-  variants: {
-    primary: 'primary',
-    secondary: 'secondary'
+  props: {
+    variant: {
+      primary: 'primary',
+      secondary: 'secondary'
+    }
   },
-  defaultVariant: 'primary'
+  defaults: {
+    variant: 'primary'
+  }
 })
 
 type Props = VariantProps<typeof css>

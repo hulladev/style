@@ -3,12 +3,20 @@ import type { VariantProps } from "@hulla/style"
 import type { PropsWithChildren } from "react"
 
 const css = vn({
-  variants: {
-    primary: "primary",
-    secondary: "secondary",
+  base: "border-2 p-2 hover:opacity-80",
+  props: {
+    variant: {
+      primary: "text-lime-400 border-lime-400",
+      secondary: "text-teal-300 border-teal-300",
+    },
+    size: {
+      sm: "text-sm",
+      md: "text-md",
+    },
   },
-  base: "base",
-  defaultVariant: "primary",
+  defaults: {
+    variant: "primary",
+  },
 })
 
 export type Props = PropsWithChildren<VariantProps<typeof css>>

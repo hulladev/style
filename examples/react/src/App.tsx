@@ -12,8 +12,10 @@ function App() {
       </section>
       <section className="border space-y-4 p-8 space-x-4">
         <h3 className="text-white text-3xl mx-4">Tailwindcss</h3>
-        <TailwindButton>Primary button (default)</TailwindButton>
-        <TailwindButton variant="secondary">Secondary button</TailwindButton>
+        <TailwindButton size="md">Primary button (default)</TailwindButton>
+        <TailwindButton size="md" variant="secondary">
+          Secondary button
+        </TailwindButton>
       </section>
     </main>
   )
