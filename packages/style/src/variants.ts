@@ -28,7 +28,6 @@ export function variants<C extends Compose>(compose: C, transform?: Transform) {
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function fromClassList(cl?: string | Record<any, any> | Iterable<any>) {
   switch (typeof cl) {
     case "string":
