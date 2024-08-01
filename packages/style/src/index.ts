@@ -2,10 +2,7 @@ import { defaultCompose } from "./defaultCompose"
 import type { ClassName, Compose, Setup, StyleFunctions } from "./types"
 import { variants } from "./variants"
 
-export function style(): StyleFunctions
-export function style<C extends Compose>(setup: Setup<C>): StyleFunctions
-
-export function style<C extends Compose>(setup?: Setup<C>) {
+export function style<C extends Compose>(setup?: Setup<C>): StyleFunctions {
   const { compose = defaultCompose, transform } = setup ?? {}
   return {
     vn: variants(compose, transform),
