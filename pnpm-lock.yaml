@@ -126,6 +126,9 @@ importers:
 
   packages/style:
     devDependencies:
+      astro:
+        specifier: ^4.10.3
+        version: 4.10.3(@types/node@20.14.5)(typescript@5.4.5)
       bunchee:
         specifier: ^5.2.1
         version: 5.2.1(typescript@5.4.5)

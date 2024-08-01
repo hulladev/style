@@ -15,11 +15,11 @@
   "maintainers": [
     "Samuel Hulla <hulla@hulla.dev>"
   ],
-  "homepage": "https://hulla.dev/projects/api",
+  "homepage": "https://hulla.dev/projects/style",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hulladev/api.git",
-    "directory": "packages/api"
+    "url": "https://github.com/hulladev/style.git",
+    "directory": "packages/style"
   },
   "workspaces": [
     "packages/*",
