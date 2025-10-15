@@ -1,0 +1,38 @@
+---
+import { variant, variantGroup } from "@/lib/style";
+import type { VariantProps } from "@hulla/style";
+import type { HTMLAttributes } from "astro/types";
+
+const sizeVariant = variant({
+  name: 'size',
+  classes: {
+    sm: "px-2 py-1 text-sm",
+    md: "px-4 py-2 text-base",
+    lg: "px-6 py-3 text-lg",
+  },
+  default: "md"
+});
+
+const colorVariant = variant({
+  name: 'color',
+  classes: {
+    primary: "text-lime-400 border-lime-400",
+    secondary: "text-teal-300 border-teal-300",
+  },
+  default: "primary"
+});
+
+const buttonGroup = variantGroup(sizeVariant, colorVariant);
+
+type Props = HTMLAttributes<'button'> & VariantProps<typeof buttonGroup>;
+const props = Astro.props
+---
+
+<button class={buttonGroup.css(props)}><slot /></button>
+
+<style>
+  button {
+    @apply border-2 cursor-pointer hover:opacity-80;
+  }
+</style>
+

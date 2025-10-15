@@ -1,6 +1,8 @@
 ---
 import TailwindButton from "@/components/TailwindButton.astro"
 import Button from "@/components/button.astro"
+import TailwindButtonGroup from "@/components/TailwindButtonGroup.astro"
+import ButtonGroup from "@/components/ButtonGroup.astro"
 ---
 
 <html lang="en">
@@ -13,14 +15,30 @@ import Button from "@/components/button.astro"
 	</head>
 	<body class="bg-black/95 space-y-8">
     <section class="border space-y-4 p-8 space-x-4">
-      <h3 class="text-white">Vanilla <code>{'<style>'}</code> tags</h3>
+      <h3 class="text-white text-xl font-bold mb-4">Vanilla <code>{'<style>'}</code> tags - Variant</h3>
       <Button>Primary button (default)</Button>
       <Button variant="secondary">Secondary button</Button>
     </section>
     <section class="border space-y-4 p-8 space-x-4">
-      <h3 class="text-white">Tailwindcss</h3>
+      <h3 class="text-white text-xl font-bold mb-4">Tailwindcss - Variant</h3>
       <TailwindButton>Primary button (default)</TailwindButton>
       <TailwindButton variant="secondary">Secondary button</TailwindButton>
+    </section>
+    <section class="border space-y-4 p-8 space-x-4">
+      <h3 class="text-white text-xl font-bold mb-4">Vanilla <code>{'<style>'}</code> tags - VariantGroup</h3>
+      <ButtonGroup>Default (md, primary)</ButtonGroup>
+      <ButtonGroup size="sm">Small primary</ButtonGroup>
+      <ButtonGroup size="lg">Large primary</ButtonGroup>
+      <ButtonGroup size="sm" color="secondary">Small secondary</ButtonGroup>
+      <ButtonGroup size="lg" color="secondary">Large secondary</ButtonGroup>
+    </section>
+    <section class="border space-y-4 p-8 space-x-4">
+      <h3 class="text-white text-xl font-bold mb-4">Tailwindcss - VariantGroup</h3>
+      <TailwindButtonGroup>Default (md, primary)</TailwindButtonGroup>
+      <TailwindButtonGroup size="sm">Small primary</TailwindButtonGroup>
+      <TailwindButtonGroup size="lg">Large primary</TailwindButtonGroup>
+      <TailwindButtonGroup size="sm" color="secondary">Small secondary</TailwindButtonGroup>
+      <TailwindButtonGroup size="lg" color="secondary">Large secondary</TailwindButtonGroup>
     </section>
 	</body>
 </html>

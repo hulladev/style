@@ -1,23 +1,20 @@
 ---
-import { vn } from "@/lib/style";
+import { variant } from "@/lib/style";
 import type { VariantProps } from "@hulla/style";
 import type { HTMLAttributes } from "astro/types";
 
-const css = vn({
-  base: 'border-2 p-2 hover:opacity-80',
-  props: {
-    variant: {
-      primary: "text-lime-400 border-lime-400",
-      secondary: "text-teal-300 border-teal-300",
-    }
+const buttonVariant = variant({
+  name: 'variant',
+  classes: {
+    primary: "text-lime-400 border-lime-400",
+    secondary: "text-teal-300 border-teal-300",
   },
-  defaults: {
-    variant: "primary"
-  }
+  base: 'border-2 p-2 hover:opacity-80',
+  default: "primary"
 });
 
-type Props = HTMLAttributes<'button'> & VariantProps<typeof css>;
+type Props = HTMLAttributes<'button'> & VariantProps<typeof buttonVariant>;
 const props = Astro.props
 ---
 
-<button class={css(props)}><slot /></button>
+<button class={buttonVariant.css(props.variant)}><slot /></button>
