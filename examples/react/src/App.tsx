@@ -1,5 +1,5 @@
 import { Button } from "./components/Button"
-import { TailwindButton } from "./components/TailwindButton"
+import { TailwindButton, TailwindButtonMerged } from "./components/TailwindButton"
 import "./index.css"
 
 function App() {
@@ -16,6 +16,10 @@ function App() {
         <TailwindButton size="md" variant="secondary">
           Secondary button
         </TailwindButton>
+        <TailwindButtonMerged size="md">Primary button (merged)</TailwindButtonMerged>
+        <TailwindButtonMerged size="md" variant="secondary">
+          Secondary button (merged)
+        </TailwindButtonMerged>
       </section>
     </main>
   )

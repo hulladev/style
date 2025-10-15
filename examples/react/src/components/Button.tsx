@@ -1,21 +1,18 @@
-import { vn } from "../lib/style"
+import { variant } from "../lib/style"
 import type { VariantProps } from "@hulla/style"
 import type { PropsWithChildren } from "react"
 
-const css = vn({
-  props: {
-    variant: {
-      primary: "primary",
-      secondary: "secondary",
-    },
+const buttonVariant = variant({
+  name: "variant",
+  classes: {
+    primary: "primary",
+    secondary: "secondary",
   },
   base: "base",
-  defaults: {
-    variant: "primary",
-  },
+  default: "primary",
 })
 
-export type Props = PropsWithChildren<VariantProps<typeof css>>
+export type Props = PropsWithChildren<VariantProps<typeof buttonVariant>>
 
 export function Button(props: Props) {
   return (
@@ -37,7 +34,7 @@ export function Button(props: Props) {
           opacity: 0.8;
         }
       `}</style>
-      <button className={css(props)}>{props.children}</button>
+      <button className={buttonVariant.css(props.variant)}>{props.children}</button>
     </>
   )
 }
