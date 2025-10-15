@@ -1,5 +1,11 @@
 # @hulla/style
 
+## 0.2.0
+
+### Minor Changes
+
+- New variants syntax
+
 ## 0.1.0
 
 ### Minor Changes
