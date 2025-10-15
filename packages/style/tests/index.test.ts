@@ -5,21 +5,21 @@ import { twJoin, twMerge } from "tailwind-merge"
 import { testSuite } from "./testSuite"
 
 describe("vanilla", () => {
-  const { cn, vn } = style()
-  testSuite("vanilla", cn, vn)
+  const { cn, variant, variantGroup } = style()
+  testSuite(cn, variant, variantGroup)
 })
 
 describe("clsx", () => {
-  const { cn, vn } = style({ compose: clsx })
-  testSuite("clsx", cn, vn)
+  const { cn, variant, variantGroup } = style({ composer: clsx })
+  testSuite(cn, variant, variantGroup)
 })
 
 describe("twJoin", () => {
-  const { cn, vn } = style({ compose: twJoin })
-  testSuite("twJoin", cn, vn)
+  const { cn, variant, variantGroup } = style({ composer: twJoin })
+  testSuite(cn, variant, variantGroup)
 })
 
 describe("twMerge", () => {
-  const { cn, vn } = style({ compose: twMerge })
-  testSuite("twMerge", cn, vn)
+  const { cn, variant, variantGroup } = style({ composer: twMerge })
+  testSuite(cn, variant, variantGroup)
 })
