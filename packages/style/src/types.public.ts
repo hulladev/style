@@ -42,9 +42,9 @@ export type StyleFunctions = {
   cn: <const CN extends ClassName[]>(...classes: CN) => string
 }
 
-export type VariantProps<V extends VariantAPI<any> | VariantGroupAPI<any>> =
+export type VariantProps<V> =
   V extends VariantGroupAPI<infer G>
     ? GroupProps<G>
-    : V extends VariantAPI<infer V>
-      ? APIPropsMapper<VariantAPI<V>>
+    : V extends VariantAPI<infer VD>
+      ? APIPropsMapper<VariantAPI<VD>>
       : {}
