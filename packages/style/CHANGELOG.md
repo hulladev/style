@@ -1,5 +1,11 @@
 # @hulla/style
 
+## 0.2.1
+
+### Patch Changes
+
+- fixes cornercase with recursive type resolution on VariantProps
+
 ## 0.2.0
 
 ### Minor Changes
