@@ -19,14 +19,16 @@
   "files": [
     "dist"
   ],
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/es/index.mjs",
   "exports": {
-    "import": {
-      "types": "./dist/es/index.d.mts",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/es/index.mjs",
+      "require": "./dist/cjs/index.cjs",
       "default": "./dist/es/index.mjs"
-    },
-    "require": {
-      "types": "./dist/cjs/index.d.ts",
-      "default": "./dist/cjs/index.js"
     }
   },
   "scripts": {
