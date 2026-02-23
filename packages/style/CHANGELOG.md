@@ -1,5 +1,11 @@
 # @hulla/style
 
+## 0.2.2
+
+### Patch Changes
+
+- change .d.mts to .d.ts stubs
+
 ## 0.2.1
 
 ### Patch Changes
