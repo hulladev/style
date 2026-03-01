@@ -63,6 +63,9 @@ const className = cn(
 // => "inline-flex items-center px-4 py-2 opacity-80"
 ```
 
+> [!TIP]
+> You don't need to use tailwind. You can evne use vanilla css or  other css solutions. Check the [examples](./examples/) section
+
 ## Creating style variants with `vn`
 
 The `vn` utility is useful for definition various style combinations. The benefit is, it uses the defined style composer for config, so it leads to consistent and optimized results with your `cn` unlike other utilities like `cva` and
