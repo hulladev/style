@@ -1,314 +1,103 @@
 import { expect, test } from "vitest"
-import type { variantBuilder } from "../src/variantBuilder"
-import type { variantGroupBuilder } from "../src/variantGroupBuilder"
 
-// this test suite is re-run multiple times based on the passed cn, to make it DRY
-export const testSuite = (
-  cn: (...args: any[]) => string,
-  variant: ReturnType<typeof variantBuilder>,
-  variantGroup: typeof variantGroupBuilder
-) => {
-  const myVariant = variant({
-    name: "variant",
-    classes: {
-      default: "hello",
-      world: "world",
-    },
-    default: "default",
+import type { vnBuilder } from "../src/vnBuilder"
+
+type SuiteOptions = {
+  dedupesExactTokens: boolean
+  mergesTailwindConflicts: boolean
+}
+
+export const testSuite = (cn: (...args: any[]) => string, vn: ReturnType<typeof vnBuilder>, options: SuiteOptions) => {
+  const tone = vn({
+    neutral: "text-gray",
+    brand: "text-blue",
   })
 
   test("exports", () => {
-    expect(variant).toBeDefined()
+    expect(vn).toBeDefined()
     expect(cn).toBeDefined()
   })
 
-  test("cn", () => {
+  test("cn composes classes", () => {
     expect(cn("hello world")).toStrictEqual("hello world")
     expect(cn("hello", "world")).toStrictEqual("hello world")
   })
 
-  test("variants defined", () => {
-    expect(myVariant.css("default")).toStrictEqual("hello")
-    expect(myVariant.css("world")).toStrictEqual("world")
+  test("cn handles arrays, nested arrays, objects, and vn output", () => {
+    const size = vn({ sm: "text-sm", lg: "text-lg" })
+    const result = cn("base", ["inline-flex", ["items-center", { rounded: true, hidden: false }]], size("sm"))
+    expect(result).toStrictEqual("base inline-flex items-center rounded text-sm")
   })
 
-  test("default variant works", () => {
-    expect(myVariant.css()).toStrictEqual("hello")
+  test("cn ignores booleans and other falsy-ish values", () => {
+    const result = cn("base", false, true, undefined, null, 0, NaN, "")
+    expect(result).toStrictEqual("base")
   })
 
-  test("base styles work", () => {
-    const baseVariant = variant({
-      name: "variant",
-      classes: {
-        world: "world",
-        me: "me",
-      },
-      default: "world",
-      base: "base",
-    })
-    expect(baseVariant.css("world")).toStrictEqual("base world")
-    expect(baseVariant.css("me")).toStrictEqual("base me")
-    expect(baseVariant.css()).toStrictEqual("base world")
+  test("exact duplicate handling matches composer behavior", () => {
+    const result = cn("text-sm", ["text-sm", { "text-sm": true }], "text-sm")
+    const expected = options.dedupesExactTokens ? "text-sm" : "text-sm text-sm text-sm text-sm"
+    expect(result).toStrictEqual(expected)
   })
 
-  test("without specifying default variants", () => {
-    const noDefaultVariant = variant({
-      name: "variant",
-      classes: {
-        world: "world",
-        me: "me",
-      },
-      base: "base",
-    })
-    expect(noDefaultVariant.css("world")).toStrictEqual("base world")
-    expect(noDefaultVariant.css("me")).toStrictEqual("base me")
+  test("tailwind conflict handling matches composer behavior", () => {
+    const result = cn("px-2", "px-4")
+    const expected = options.mergesTailwindConflicts ? "px-4" : "px-2 px-4"
+    expect(result).toStrictEqual(expected)
   })
 
-  test("array definitions in classes", () => {
-    const arrayVariant = variant({
-      name: "size",
-      classes: {
-        sm: ["text-sm", "p-2"],
-        md: ["text-md", "p-4"],
-      },
-      default: "sm",
-      base: "base",
-    })
-    expect(arrayVariant.css("sm")).toStrictEqual("base text-sm p-2")
-    expect(arrayVariant.css("md")).toStrictEqual("base text-md p-4")
-    expect(arrayVariant.css()).toStrictEqual("base text-sm p-2")
+  test("vn resolves explicit values", () => {
+    expect(tone("neutral")).toStrictEqual("text-gray")
+    expect(tone("brand")).toStrictEqual("text-blue")
   })
 
-  test("object definitions in classes", () => {
-    const objectVariant = variant({
-      name: "variant",
-      classes: {
-        primary: { "text-blue": true, "bg-white": true, hidden: false },
-        secondary: { "text-red": true, "bg-black": false },
-      },
-      default: "primary",
+  test("array definitions in vn are serialized", () => {
+    const spacing = vn({
+      compact: ["p-1", "gap-1"],
+      comfy: ["p-4", "gap-3"],
     })
-    // All composers now handle objects consistently through serialization
-    expect(objectVariant.css("primary")).toStrictEqual("text-blue bg-white")
-    expect(objectVariant.css("secondary")).toStrictEqual("text-red")
+
+    expect(spacing("compact")).toStrictEqual("p-1 gap-1")
+    expect(spacing("comfy")).toStrictEqual("p-4 gap-3")
   })
 
-  test("nested arrays and objects", () => {
-    const nestedVariant = variant({
-      name: "complex",
-      classes: {
-        one: ["base-class", { active: true, disabled: false }],
-        two: [{ primary: true }, "secondary-class"],
-      },
-      default: "one",
+  test("object definitions in vn are serialized", () => {
+    const state = vn({
+      enabled: { "opacity-100": true, hidden: false },
+      disabled: { "opacity-60": true, "pointer-events-none": true },
     })
-    // All composers now handle nested arrays with objects consistently through serialization
-    expect(nestedVariant.css("one")).toStrictEqual("base-class active")
-    expect(nestedVariant.css("two")).toStrictEqual("primary secondary-class")
+
+    expect(state("enabled")).toStrictEqual("opacity-100")
+    expect(state("disabled")).toStrictEqual("opacity-60 pointer-events-none")
   })
 
-  test("variantGroup basic functionality", () => {
-    const sizeVariant = variant({
-      name: "size",
-      classes: {
-        sm: "text-sm",
-        md: "text-md",
-        lg: "text-lg",
-      },
-      default: "md",
+  test("nested arrays and objects in vn are serialized", () => {
+    const mode = vn({
+      one: ["base-class", { active: true, disabled: false }],
+      two: [{ primary: true }, "secondary-class"],
     })
 
-    const colorVariant = variant({
-      name: "color",
-      classes: {
-        primary: "text-blue",
-        secondary: "text-red",
-      },
-      default: "primary",
-    })
-
-    const group = variantGroup(sizeVariant, colorVariant)
-
-    expect(group.css({ size: "sm", color: "primary" })).toStrictEqual("text-sm text-blue")
-    expect(group.css({ size: "lg", color: "secondary" })).toStrictEqual("text-lg text-red")
-    expect(group.css({ size: "md", color: "primary" })).toStrictEqual("text-md text-blue")
+    expect(mode("one")).toStrictEqual("base-class active")
+    expect(mode("two")).toStrictEqual("primary secondary-class")
   })
 
-  test("variantGroup with defaults", () => {
-    const sizeVariant = variant({
-      name: "size",
-      classes: {
-        sm: "text-sm",
-        md: "text-md",
-      },
-      default: "md",
+  test("vn object syntax respects truthiness", () => {
+    const flags = vn({
+      on: { enabled: true, disabled: false, active: 1, hidden: 0, highlighted: "yes", muted: "" },
     })
 
-    const colorVariant = variant({
-      name: "color",
-      classes: {
-        primary: "text-blue",
-        secondary: "text-red",
-      },
-      default: "primary",
-    })
-
-    const group = variantGroup(sizeVariant, colorVariant)
-
-    // Should use defaults when not specified
-    expect(group.css({})).toStrictEqual("text-md text-blue")
-    expect(group.css({ size: "sm" })).toStrictEqual("text-sm text-blue")
-    expect(group.css({ color: "secondary" })).toStrictEqual("text-md text-red")
+    expect(flags("on")).toStrictEqual("enabled active highlighted")
   })
 
-  test("variantGroup with base styles", () => {
-    const sizeVariant = variant({
-      name: "size",
-      classes: {
-        sm: "p-2",
-        lg: "p-4",
-      },
-      default: "sm",
-      base: "rounded",
-    })
+  test("cn composes multiple vns and raw strings", () => {
+    const color = vn({ blue: "text-blue", red: "text-red" })
+    const size = vn({ sm: "text-sm", lg: "text-lg" })
+    const spacing = vn({ compact: "p-1", comfortable: "p-4" })
 
-    const colorVariant = variant({
-      name: "color",
-      classes: {
-        blue: "bg-blue",
-        red: "bg-red",
-      },
-      default: "blue",
-      base: "border",
-    })
-
-    const group = variantGroup(sizeVariant, colorVariant)
-
-    expect(group.css({ size: "sm", color: "blue" })).toStrictEqual("rounded p-2 border bg-blue")
-    expect(group.css({ size: "lg", color: "red" })).toStrictEqual("rounded p-4 border bg-red")
-  })
-
-  test("variantGroup with array definitions", () => {
-    const sizeVariant = variant({
-      name: "size",
-      classes: {
-        sm: ["text-sm", "p-2"],
-        lg: ["text-lg", "p-4"],
-      },
-      default: "sm",
-    })
-
-    const colorVariant = variant({
-      name: "color",
-      classes: {
-        primary: ["text-blue", "bg-blue-50"],
-        secondary: ["text-red", "bg-red-50"],
-      },
-      default: "primary",
-    })
-
-    const group = variantGroup(sizeVariant, colorVariant)
-
-    expect(group.css({ size: "sm", color: "primary" })).toStrictEqual("text-sm p-2 text-blue bg-blue-50")
-    expect(group.css({ size: "lg", color: "secondary" })).toStrictEqual("text-lg p-4 text-red bg-red-50")
-  })
-
-  test("variantGroup with object definitions", () => {
-    const sizeVariant = variant({
-      name: "size",
-      classes: {
-        sm: { "text-sm": true, "p-2": true },
-        lg: { "text-lg": true, "p-4": true, hidden: false },
-      },
-      default: "sm",
-    })
-
-    const colorVariant = variant({
-      name: "color",
-      classes: {
-        primary: { "text-blue": true, "bg-white": true },
-        secondary: { "text-red": true, "bg-black": false },
-      },
-      default: "primary",
-    })
-
-    const group = variantGroup(sizeVariant, colorVariant)
-
-    // All composers now handle objects consistently through serialization
-    expect(group.css({ size: "sm", color: "primary" })).toStrictEqual("text-sm p-2 text-blue bg-white")
-    expect(group.css({ size: "lg", color: "secondary" })).toStrictEqual("text-lg p-4 text-red")
-  })
-
-  test("variantGroup with nested arrays and objects", () => {
-    const sizeVariant = variant({
-      name: "size",
-      classes: {
-        sm: ["text-sm", { "p-2": true, "m-0": false }],
-        lg: [{ "text-lg": true }, "p-4"],
-      },
-      default: "sm",
-    })
-
-    const stateVariant = variant({
-      name: "state",
-      classes: {
-        active: ["active", { enabled: true, disabled: false }],
-        inactive: [{ inactive: true }, "disabled"],
-      },
-      default: "active",
-    })
-
-    const group = variantGroup(sizeVariant, stateVariant)
-
-    // All composers now handle nested arrays with objects consistently through serialization
-    expect(group.css({ size: "sm", state: "active" })).toStrictEqual("text-sm p-2 active enabled")
-    expect(group.css({ size: "lg", state: "inactive" })).toStrictEqual("text-lg p-4 inactive disabled")
-  })
-
-  test("cn composing variant.css, variantGroup.css, and string literals", () => {
-    const colorVariant = variant({
-      name: "color",
-      classes: {
-        blue: "text-blue",
-        red: "text-red",
-      },
-      default: "blue",
-    })
-
-    const sizeVariant = variant({
-      name: "size",
-      classes: {
-        sm: "text-sm",
-        lg: "text-lg",
-      },
-      default: "sm",
-    })
-
-    const spacingVariant = variant({
-      name: "spacing",
-      classes: {
-        compact: "p-1",
-        comfortable: "p-4",
-      },
-      default: "compact",
-    })
-
-    const group = variantGroup(sizeVariant, spacingVariant)
-
-    // Compose variant.css, group.css, and string literals together
-    const result1 = cn(colorVariant.css("blue"), group.css({ size: "sm", spacing: "compact" }), "extra-class")
+    const result1 = cn(color("blue"), size("sm"), spacing("compact"), "extra-class")
     expect(result1).toStrictEqual("text-blue text-sm p-1 extra-class")
 
-    const result2 = cn(
-      "base-class",
-      colorVariant.css("red"),
-      group.css({ size: "lg", spacing: "comfortable" }),
-      "another-class"
-    )
+    const result2 = cn("base-class", color("red"), size("lg"), spacing("comfortable"), "another-class")
     expect(result2).toStrictEqual("base-class text-red text-lg p-4 another-class")
-
-    // With default values
-    const result3 = cn(colorVariant.css(), group.css({}), "default-combo")
-    expect(result3).toStrictEqual("text-blue text-sm p-1 default-combo")
   })
 }

@@ -1,20 +1,16 @@
-import { variant } from "../lib/style"
-import type { VariantProps } from "@hulla/style"
+import { cn, vn } from "../lib/style"
 import type { PropsWithChildren } from "react"
 
-const buttonVariant = variant({
-  name: "variant",
-  classes: {
-    primary: "primary",
-    secondary: "secondary",
-  },
-  base: "base",
-  default: "primary",
+const $variant = vn({
+  primary: "primary",
+  secondary: "secondary",
 })
 
-export type Props = PropsWithChildren<VariantProps<typeof buttonVariant>>
+export type Props = PropsWithChildren<{ variant?: typeof $variant.infer }>
 
 export function Button(props: Props) {
+  const variant = props.variant ?? "primary"
+
   return (
     <>
       {/* in a real-world scenario you'd probably define your own .css file and import it, but i wanted to */}
@@ -34,7 +30,7 @@ export function Button(props: Props) {
           opacity: 0.8;
         }
       `}</style>
-      <button className={buttonVariant.css(props.variant)}>{props.children}</button>
+      <button className={cn("base", $variant(variant))}>{props.children}</button>
     </>
   )
 }

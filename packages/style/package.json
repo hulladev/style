@@ -34,7 +34,8 @@
   "scripts": {
     "lint": "eslint . --fix",
     "build": "bunchee -m",
-    "test": "vitest run"
+    "test": "vitest run tests/index.test.ts && pnpm run test:types",
+    "test:types": "pnpm --dir ../.. exec tsc -p packages/style/tsconfig.types.json --noEmit"
   },
   "devDependencies": {
     "astro": "^4.10.3",

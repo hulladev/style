@@ -28,4 +28,3 @@ export function defaultSerializer(input: ClassName): string {
   const value = toValue(input)
   return value ? String(value) : ""
 }
-

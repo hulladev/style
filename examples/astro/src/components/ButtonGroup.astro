@@ -1,33 +1,26 @@
 ---
-import { variant, variantGroup } from '@/lib/style.ts'
-import type { VariantProps } from '@hulla/style'
+import { cn, vn } from '@/lib/style.ts'
 
-const sizeVariant = variant({
-  name: 'size',
-  classes: {
-    sm: 'size-sm',
-    md: 'size-md',
-    lg: 'size-lg'
-  },
-  default: 'md'
+const $size = vn({
+  sm: 'size-sm',
+  md: 'size-md',
+  lg: 'size-lg'
 })
 
-const colorVariant = variant({
-  name: 'color',
-  classes: {
-    primary: 'color-primary',
-    secondary: 'color-secondary'
-  },
-  default: 'primary'
+const $color = vn({
+  primary: 'color-primary',
+  secondary: 'color-secondary'
 })
 
-const buttonGroup = variantGroup(sizeVariant, colorVariant)
+interface Props {
+  size?: typeof $size.infer
+  color?: typeof $color.infer
+}
 
-type Props = VariantProps<typeof buttonGroup>
-const props = Astro.props
+const { size = 'md', color = 'primary' } = Astro.props
 ---
 
-<button class={buttonGroup.css(props)}><slot /></button>
+<button class={cn($size(size), $color(color))}><slot /></button>
 
 <style>
   button {
@@ -58,4 +51,3 @@ const props = Astro.props
     border-color: aquamarine;
   }
 </style>
-
