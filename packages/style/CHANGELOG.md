@@ -1,5 +1,11 @@
 # @hulla/style
 
+## 0.3.0
+
+### Minor Changes
+
+- Simplif vn syntax to flat structure
+
 ## 0.2.2
 
 ### Patch Changes
