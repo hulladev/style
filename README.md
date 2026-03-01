@@ -21,7 +21,7 @@ A tiny, zero-dependency styling utility focused on two primitives:
 | Class composition | ✅ | ✅ | ❌ | ❌ |
 | Variant maps | ✅ | ❌ | ✅ | ✅ |
 | Works with custom composers | ✅ | ❌ | ❌ | ❌ |
-| Object/array input support in composer path | ✅ | ✅ | Limited | Limited |
+| Object/array input support in composer | ✅ | ✅ | Limited | Limited |
 | Type-safe variant keys | ✅ | ❌ | ✅ | ✅ |
 | Bundle size | 0.7KB | ~1KB | ~2.5KB | ~5KB |
 
