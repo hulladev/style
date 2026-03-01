@@ -169,9 +169,9 @@ Default behavior:
 
 ## Best Practices
 
-- Keep vn declarations flat and focused (`$size`, `$variant`, `$state`) to accidental class overrides.
-- Use JS function param defaults (`size = "md"`) instead for defining variant defaults
-- Put shared classes in one `cn(...)` base string instead of within `vn` definitions.
+- Keep vn declarations flat and focused (`$size`, `$variant`, `$state`) to avoid accidental class overrides.
+- Use JS function param defaults (`size = "md"`)  for defining variant defaults
+- Put shared classes in one `cn("base here", $size(size))` base string instead of within `vn` definitions.
 - Use `$`-prefixed `vn` variables to avoid `size(size)` naming collisions.
 
 ## Exports
