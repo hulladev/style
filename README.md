@@ -64,7 +64,7 @@ const className = cn(
 ```
 
 > [!TIP]
-> You don't need to use tailwind. You can evne use vanilla css or  other css solutions. Check the [examples](./examples/) section
+> You don't need to use tailwind. You're free to vanilla css or any other approach. Check the [examples](./examples/) section
 
 ## Creating style variants with `vn`
 
