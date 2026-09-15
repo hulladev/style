@@ -1,5 +1,11 @@
 # @hulla/style
 
+## 0.4.0
+
+### Minor Changes
+
+- Skip serialization for string inputs and normalize other inputs without allocating a second argument array. Preserve custom serializer behavior for both cn and vn.
+
 ## 0.3.0
 
 ### Minor Changes
