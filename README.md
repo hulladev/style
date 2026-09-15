@@ -165,6 +165,11 @@ export const { cn, vn } = style({
 - The `serializer` parses what gets passed into your `cn` and `vn` calls (usually stuff like parsing objects, arrays, etc)
 - The `composer` transforms the `serializer` output
 
+With the default serializer, strings go straight to the composer; only non-string inputs
+are serialized. This applies with both the default composer and custom composers such as
+`twMerge`. Custom composers still receive only strings, in the original argument order.
+If you supply a custom serializer, it receives every input, including strings.
+
 
 Default behavior:
 - serializer supports strings, arrays, nested arrays, and objects, sets and maps
