@@ -1,13 +1,17 @@
 import { expect, test } from "vitest"
 
-import type { vnBuilder } from "../src/vnBuilder"
+import type { Variant, VariantsDefinition } from "../src"
 
 type SuiteOptions = {
   dedupesExactTokens: boolean
   mergesTailwindConflicts: boolean
 }
 
-export const testSuite = (cn: (...args: any[]) => string, vn: ReturnType<typeof vnBuilder>, options: SuiteOptions) => {
+export const testSuite = (
+  cn: (...args: any[]) => string,
+  vn: <const V extends VariantsDefinition>(variants: V) => Variant<V>,
+  options: SuiteOptions
+) => {
   const tone = vn({
     neutral: "text-gray",
     brand: "text-blue",

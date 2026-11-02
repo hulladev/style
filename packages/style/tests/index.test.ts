@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from "vitest"
-import { defaultSerializer, style } from "../src"
+import { defaultSerializer, style, type StylePipeline } from "../src"
 import { clsx } from "clsx"
 import { twJoin, twMerge } from "tailwind-merge"
 import { testSuite } from "./testSuite"
@@ -78,5 +78,37 @@ describe("serialization", () => {
     const tone = vn({ primary: "text-blue" })
     expect(tone("primary")).toBe("[text-blue]")
     expect(serializer.mock.calls).toEqual([["text-blue"]])
+  })
+})
+
+describe("custom pipelines", () => {
+  test("passes serializer output to the composer in both cn and vn", () => {
+    const serializer = vi.fn((value: number) => ({ value }))
+    const composer = vi.fn((...values: { value: number }[]) => values.map((entry) => entry.value))
+    const { cn, vn } = style({ serializer, composer })
+    const amount = vn({ small: 2, large: 5 })
+
+    expect(cn(2, 3)).toEqual([2, 3])
+    expect(serializer.mock.calls).toEqual([[2], [3]])
+    expect(composer).toHaveBeenLastCalledWith({ value: 2 }, { value: 3 })
+    expect(amount("large")).toEqual([5])
+    expect(serializer).toHaveBeenLastCalledWith(5)
+    expect(composer).toHaveBeenLastCalledWith({ value: 5 })
+    expect(amount.infer).toBeUndefined()
+  })
+
+  test("keeps separate instances independent and preserves arbitrary output values", () => {
+    const pipeline: StylePipeline<number, number, { values: number[] }> = {
+      serializer: (value) => value,
+      composer: (...values) => ({ values }),
+    }
+    const numeric = style(pipeline)
+    const web = style()
+    const choice = numeric.vn({ two: 2 })
+
+    expect(numeric.cn(1, 2)).toEqual({ values: [1, 2] })
+    expect(choice("two")).toEqual({ values: [2] })
+    expect(web.cn("base", "base")).toBe("base")
+    expect(style({}).cn("base", "base")).toBe("base")
   })
 })
