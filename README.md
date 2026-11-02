@@ -8,7 +8,7 @@ A tiny, zero-dependency styling utility focused on two primitives:
 
 ## Why @hulla/style?
 
-- ✅ **Tiny runtime** - `709B` smallest out there
+- ✅ **Small runtime** - zero runtime dependencies
 - ✅ **Works out of the box** - sane defaults with no setup required
 - ✅ **Framework agnostic** - works in React, Astro, Vue, Svelte, and plain TS/JS
 - ✅ **Composable architecture** - pair with `clsx`, `tailwind-merge`, or your own composer
@@ -23,7 +23,7 @@ A tiny, zero-dependency styling utility focused on two primitives:
 | Works with custom composers | ✅ | ❌ | ❌ | ❌ |
 | Object/array input support in composer | ✅ | ✅ | Limited | Limited |
 | Type-safe variant keys | ✅ | ❌ | ✅ | ✅ |
-| Bundle size | 0.7KB | ~1KB | ~2.5KB | ~5KB |
+| Bundle size (minified) | ~0.8KB | ~1KB | ~2.5KB | ~5KB |
 | Framework/styling agnostic | ✅ | ✅ | ❌ | ❌ |
 
 ## Installation
@@ -34,6 +34,12 @@ pnpm add @hulla/style
 ```
 
 ## Setup
+
+For React Native style objects, use the separately installed, optional
+[`@hulla/style-native`](./packages/native/README.md) adapter.
+Pass it to the existing factory with `style(native)`; the core
+continues to own `cn` / `vn` and does not acquire native dependencies. The
+unconfigured API below continues to produce class strings.
 
 Create one shared style module and import from it everywhere.
 
@@ -175,6 +181,35 @@ Default behavior:
 - serializer supports strings, arrays, nested arrays, and objects, sets and maps
 - default composer dedupes exact duplicate class tokens
 
+
+## Native styles and custom value pipelines
+
+The existing serializer/composer hooks can compose values other than class strings.
+Generic hook types are available from `@hulla/style` 0.5.0. The optional
+[native plugin](./packages/native/README.md) supplies a configuration object for these hooks:
+
+```ts
+import { style } from "@hulla/style"
+import { native } from "@hulla/style-native"
+
+export const { cn, vn } = style(native)
+
+const $size = vn({ compact: { padding: 8 }, regular: { padding: 12 } })
+cn($size("compact"), { paddingHorizontal: 16 }) // native style array
+```
+
+`native` is an object containing an identity `serializer` and a native `composer`. Style objects
+pass through serialization unchanged, then the composer preserves their references
+and native override order. The core still creates both `cn` and `vn` through the
+same pipeline as the web helpers. Declare one shared native helper pair for view,
+text, and image recipes; each call retains its own style types. There is no
+separate adapter configuration property.
+
+For custom value types, `StylePipeline<Input, Serialized, Output>` requires both
+hooks. `Serializer<Input, Serialized>` converts each input, and
+`Composer<Serialized, Output>` combines those results. TypeScript checks their
+connection and infers the `cn` / `vn` output. Existing class configurations can
+still omit either hook and use its string-based default.
 
 ## Best Practices
 
