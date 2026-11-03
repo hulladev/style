@@ -213,10 +213,10 @@ still omit either hook and use its string-based default.
 
 ## AI agent guidance
 
-Install the [hulla-style skill](https://github.com/hulladev/skills/tree/main/skills/hulla-style) for package-specific guidance on shared styling helpers, typed variants, merging, and native style composition:
+Install the [@hulla/style skill](https://github.com/hulladev/skills/tree/main/skills/style) for package-specific guidance on shared styling helpers, typed variants, merging, and native style composition:
 
 ```sh
-npx skills add hulladev/skills --skill hulla-style
+npx skills add hulladev/skills --skill style
 ```
 
 Choose your coding agent in the installer. See [installation and version compatibility](https://hulla.dev/docs/cli/agent-skills) before adding or updating skills in your application.
