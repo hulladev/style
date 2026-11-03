@@ -211,6 +211,16 @@ hooks. `Serializer<Input, Serialized>` converts each input, and
 connection and infers the `cn` / `vn` output. Existing class configurations can
 still omit either hook and use its string-based default.
 
+## AI agent guidance
+
+Install the [hulla-style skill](https://github.com/hulladev/skills/tree/main/skills/hulla-style) for package-specific guidance on shared styling helpers, typed variants, merging, and native style composition:
+
+```sh
+npx skills add hulladev/skills --skill hulla-style
+```
+
+Choose your coding agent in the installer. See [installation and version compatibility](https://hulla.dev/docs/cli/agent-skills) before adding or updating skills in your application.
+
 ## Best Practices
 
 - Keep vn declarations flat and focused (`$size`, `$variant`, `$state`) to avoid accidental class overrides.

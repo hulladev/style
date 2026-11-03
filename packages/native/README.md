@@ -138,6 +138,16 @@ where a custom style needs tokens. Pass the resulting styles through public `sty
 props, or through `Button.contentStyle` for its visible surface. The adapter does
 not need theme props, subscribe to themes, or change component sizing.
 
+## AI agent guidance
+
+Install the [hulla-style skill](https://github.com/hulladev/skills/tree/main/skills/hulla-style) for package-specific guidance on native style composition, variant inference, and shared helper configuration:
+
+```sh
+npx skills add hulladev/skills --skill hulla-style
+```
+
+Choose your coding agent in the installer. See [installation and version compatibility](https://hulla.dev/docs/cli/agent-skills) before adding or updating skills in your application.
+
 ## Reference and cost
 
 | API                    | Result                                                                                            |
