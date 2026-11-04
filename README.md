@@ -3,6 +3,7 @@
 > Styling made easy.
 
 A tiny, zero-dependency styling utility focused on two primitives:
+
 - `cn(...)` for class composition
 - `vn(...)` for flat variant maps
 
@@ -16,15 +17,15 @@ A tiny, zero-dependency styling utility focused on two primitives:
 
 ## Comparison
 
-| Feature | @hulla/style | clsx/classnames | cva | tailwind-variants |
-|---------|--------------|-----------------|-----|-------------------|
-| Class composition | ✅ | ✅ | ❌ | ❌ |
-| Variant maps | ✅ | ❌ | ✅ | ✅ |
-| Works with custom composers | ✅ | ❌ | ❌ | ❌ |
-| Object/array input support in composer | ✅ | ✅ | Limited | Limited |
-| Type-safe variant keys | ✅ | ❌ | ✅ | ✅ |
-| Bundle size (minified) | ~0.8KB | ~1KB | ~2.5KB | ~5KB |
-| Framework/styling agnostic | ✅ | ✅ | ❌ | ❌ |
+| Feature                                | @hulla/style | clsx/classnames | cva     | tailwind-variants |
+| -------------------------------------- | ------------ | --------------- | ------- | ----------------- |
+| Class composition                      | ✅           | ✅              | ❌      | ❌                |
+| Variant maps                           | ✅           | ❌              | ✅      | ✅                |
+| Works with custom composers            | ✅           | ❌              | ❌      | ❌                |
+| Object/array input support in composer | ✅           | ✅              | Limited | Limited           |
+| Type-safe variant keys                 | ✅           | ❌              | ✅      | ✅                |
+| Bundle size (minified)                 | ~0.8KB       | ~1KB            | ~2.5KB  | ~5KB              |
+| Framework/styling agnostic             | ✅           | ✅              | ❌      | ❌                |
 
 ## Installation
 
@@ -60,11 +61,7 @@ The `cn` utility is a light-weight class composer you're familiar from packages 
 ```ts
 import { cn } from "@/lib/style"
 
-const className = cn(
-  "inline-flex items-center",
-  ["px-4", "py-2"],
-  { "opacity-80": true, hidden: false },
-)
+const className = cn("inline-flex items-center", ["px-4", "py-2"], { "opacity-80": true, hidden: false })
 
 // => "inline-flex items-center px-4 py-2 opacity-80"
 ```
@@ -93,7 +90,7 @@ $size("lg")
 ```
 
 > [!NOTE]
-> The `$prop` naming convention is not mandatory but recommended. Helps to distinguish between what's 
+> The `$prop` naming convention is not mandatory but recommended. Helps to distinguish between what's
 > a `vn` function and what's your prop you use from a component. i.e. `({ size }: Props) => $size(size)`
 
 ### Using `infer` to define prop types
@@ -135,7 +132,7 @@ function Button({ variant, size = "md" }: Props) {
       className={cn(
         "rounded border hover:opacity-80", // shared base classes
         $size(size),
-        $variant(variant),
+        $variant(variant)
       )}
     />
   )
@@ -146,7 +143,7 @@ function Button({ variant, size = "md" }: Props) {
 //     ^ base class                    ^ default size "md"  ^ variant "danger"
 ```
 
-Also notice how we defined a default for  `$size` making `size?: typeof $size.infer` optional parameter and in the component `({ size = "md" })` defining default value for it. This way we can define defaults for each component
+Also notice how we defined a default for `$size` making `size?: typeof $size.infer` optional parameter and in the component `({ size = "md" })` defining default value for it. This way we can define defaults for each component
 
 Meanwhile the `variant` is mandatory (no `?:`) so if user tried `<Button />` they you would get `Mandatory type "variant" is missing in type "Props"` type-error.
 
@@ -176,11 +173,10 @@ are serialized. This applies with both the default composer and custom composers
 `twMerge`. Custom composers still receive only strings, in the original argument order.
 If you supply a custom serializer, it receives every input, including strings.
 
-
 Default behavior:
+
 - serializer supports strings, arrays, nested arrays, and objects, sets and maps
 - default composer dedupes exact duplicate class tokens
-
 
 ## Native styles and custom value pipelines
 
@@ -224,7 +220,7 @@ Choose your coding agent in the installer. See [installation and version compati
 ## Best Practices
 
 - Keep vn declarations flat and focused (`$size`, `$variant`, `$state`) to avoid accidental class overrides.
-- Use JS function param defaults (`size = "md"`)  for defining variant defaults
+- Use JS function param defaults (`size = "md"`) for defining variant defaults
 - Put shared classes in one `cn("base here", $size(size))` base string instead of within `vn` definitions.
 - Use `$`-prefixed `vn` variables to avoid `size(size)` naming collisions.
 
@@ -234,3 +230,7 @@ Choose your coding agent in the installer. See [installation and version compati
 - `defaultSerializer`
 - `defaultComposer`
 - types from `types.public.ts`
+
+## Publishing
+
+See [the release workflow](docs/releasing.md) for changesets, version preparation, coordinated releases and npm trusted publishing.
