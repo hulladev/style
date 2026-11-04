@@ -13,7 +13,7 @@
   "homepage": "https://hulla.dev/projects/style",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hulladev/style.git",
+    "url": "git+https://github.com/hulladev/style.git",
     "directory": "packages/style"
   },
   "files": [
@@ -48,5 +48,9 @@
     "clsx": "^2.1.1",
     "tailwind-merge": "^2.3.0",
     "vitest": "^1.6.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

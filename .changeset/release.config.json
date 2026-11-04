@@ -1,0 +1,8 @@
+{
+  "repository": "hulladev/style",
+  "title": "@hulla/style",
+  "packageManager": "pnpm",
+  "packages": ["packages/native", "packages/style"],
+  "smokeImports": ["@hulla/style"],
+  "smokeDependencies": []
+}

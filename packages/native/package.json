@@ -6,7 +6,7 @@
   "homepage": "https://hulla.dev/docs/style/native",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hulladev/style.git",
+    "url": "git+https://github.com/hulladev/style.git",
     "directory": "packages/native"
   },
   "files": [
@@ -46,5 +46,9 @@
     "react": "19.3.0",
     "react-native": "0.88.1",
     "vitest": "^1.6.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

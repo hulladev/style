@@ -5,7 +5,15 @@
     "build": "turbo build",
     "test": "turbo test",
     "dev": "turbo dev",
-    "prepare": "husky"
+    "prepare": "husky",
+    "changeset": "changeset",
+    "version:packages": "changeset version && node scripts/release.mjs prepare && pnpm install --lockfile-only --ignore-scripts && prettier --write .changeset/release-plan.json packages/native/package.json packages/style/package.json",
+    "test:release": "node --test scripts/release-checks.mjs",
+    "release:check": "pnpm --filter @hulla/style --filter @hulla/style-native build && pnpm --filter @hulla/style --filter @hulla/style-native test && pnpm run test:release",
+    "release:pack": "node scripts/release.mjs pack",
+    "release:publish": "node scripts/release.mjs publish",
+    "release:verify": "node scripts/release.mjs verify",
+    "release": "node scripts/release.mjs publish"
   },
   "author": {
     "name": "Samuel Hulla",
@@ -26,7 +34,7 @@
     "examples/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.27.5",
+    "@changesets/cli": "3.0.3",
     "@eslint/js": "^9.5.0",
     "@types/eslint__js": "^8.42.3",
     "bunchee": "^5.2.1",
@@ -41,7 +49,7 @@
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.13.0"
   },
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@10.24.0",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-emoji"
@@ -110,5 +118,6 @@
         }
       ]
     }
-  }
+  },
+  "private": true
 }

@@ -1,11 +1,14 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.0.1/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "fixed": [],
+  "fixed": [["@hulla/style-native", "@hulla/style"]],
   "linked": [],
   "access": "public",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  "ignore": ["example-astro", "example-react"]
+  "ignore": ["example-astro", "example-react"],
+  "privatePackages": {
+    "version": false,
+    "tag": false
+  }
 }
