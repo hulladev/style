@@ -6,7 +6,7 @@ the core owns `cn`, `vn`, and variant inference. The preset contains an identity
 `serializer` and a native `composer` for the existing configuration hooks. It has no
 runtime imports; React Native supplies its style types.
 
-Requires `@hulla/style` 0.5.0 or later, before 0.6, and React Native 0.81 or later,
+Requires `@hulla/style` 1.0.1 or later, before 2.0, and React Native 0.81 or later,
 before 1.0. Typed usage requires TypeScript 5.4 or later.
 
 Install both packages in the native app:
@@ -23,7 +23,7 @@ The core does not depend on the native plugin, so web consumers install only
 Create one shared pair of helpers outside your components. The same pair handles view, text, and image recipes:
 
 ```ts
-// src/lib/native-style.ts
+// src/lib/style.ts
 import { style } from "@hulla/style"
 import { native } from "@hulla/style-native"
 
@@ -35,7 +35,7 @@ React Native applies later styles last, so caller overrides go at the end:
 
 ```tsx
 import { StyleSheet, View, type ViewProps } from "react-native"
-import { cn } from "../lib/native-style"
+import { cn } from "../lib/style"
 
 const styles = StyleSheet.create({ base: { padding: 12 }, muted: { opacity: 0.5 } })
 
@@ -76,7 +76,7 @@ Import the same `cn` and `vn` for view, text, and image styles. Each call keeps 
 input style shape, and each variant key retains the selected value's type:
 
 ```ts
-import { cn, vn } from "../lib/native-style"
+import { cn, vn } from "../lib/style"
 
 const $weight = vn({ regular: { fontWeight: "400" }, strong: { fontWeight: "600" } })
 const labelStyle = cn($weight("strong"), { fontSize: 14 }) // Text.style
@@ -88,7 +88,7 @@ a recipe at its declaration, use `satisfies` with the target native style type:
 
 ```ts
 import type { ImageStyle, TextStyle, ViewStyle } from "react-native"
-import { cn } from "../lib/native-style"
+import { cn } from "../lib/style"
 
 const containerStyle = cn({ padding: 16 } satisfies ViewStyle)
 const titleStyle = cn({ fontSize: 20, fontWeight: "600" } satisfies TextStyle)
@@ -99,7 +99,7 @@ For a whole variant map, check each entry with `Record<string, TextStyle>`:
 
 ```ts
 import type { TextStyle } from "react-native"
-import { vn } from "../lib/native-style"
+import { vn } from "../lib/style"
 
 const $weight = vn({
   regular: { fontWeight: "400" },
@@ -124,7 +124,7 @@ compose its style values:
 
 ```tsx
 import { Pressable, StyleSheet } from "react-native"
-import { cn } from "../lib/native-style"
+import { cn } from "../lib/style"
 
 const styles = StyleSheet.create({ base: { padding: 12 }, pressed: { opacity: 0.7 } })
 
@@ -137,6 +137,26 @@ For `@hulla/ui`, configure `NativeThemeProvider` once and read `useNativeTheme()
 where a custom style needs tokens. Pass the resulting styles through public `style`
 props, or through `Button.contentStyle` for its visible surface. The adapter does
 not need theme props, subscribe to themes, or change component sizing.
+
+## Resolve concrete colors
+
+The separate `@hulla/style-native/color` entry point requires version 1.1.0 or later.
+It imports React Native's color parser; the root composition preset keeps no runtime imports.
+Color-only consumers do not need the optional `@hulla/style` peer.
+
+```ts
+import { alpha, mix, isDark } from "@hulla/style-native/color"
+
+alpha("#12345680", 0.5) // "#12345640": existing alpha is preserved
+mix("#2258e5", "transparent", 0.5) // premultiplied OKLab mixing
+isDark("#040404") // true
+```
+
+`alpha` multiplies existing opacity and `mix` weights the overlay; amounts are clamped to 0–1.
+Use concrete React Native color strings. Dynamic platform color objects are not accepted.
+If a string cannot be resolved, `alpha` returns the input, `mix` returns its base,
+and `isDark` returns false. Repeated opacity and mixing results are reused through
+separate bounded caches of 256 entries each. This is no theme store or rendering engine.
 
 ## AI agent guidance
 
