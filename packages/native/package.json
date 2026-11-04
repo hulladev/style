@@ -28,12 +28,23 @@
         "default": "./dist/cjs/index.cjs"
       },
       "default": "./dist/es/index.mjs"
+    },
+    "./color": {
+      "import": {
+        "types": "./dist/es/color.d.mts",
+        "default": "./dist/es/color.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/color.d.cts",
+        "default": "./dist/cjs/color.cjs"
+      },
+      "default": "./dist/es/color.mjs"
     }
   },
   "scripts": {
     "lint": "eslint src tests",
     "build": "bunchee -m",
-    "test": "vitest run tests/index.test.ts && pnpm run test:types",
+    "test": "vitest run tests/index.test.ts tests/color.test.ts && pnpm run test:types",
     "test:types": "pnpm --dir ../.. exec tsc -p packages/native/tsconfig.types.json --noEmit"
   },
   "peerDependencies": {
@@ -45,10 +56,16 @@
     "@types/react": "^19.3.0",
     "react": "19.3.0",
     "react-native": "0.88.1",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.0",
+    "colorjs.io": "^0.7.1"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependenciesMeta": {
+    "@hulla/style": {
+      "optional": true
+    }
   }
 }
