@@ -1,5 +1,15 @@
 # @hulla/style-native
 
+## 1.1.0
+
+### Minor Changes
+
+- 995ac1e: Add a separate native color entry point with opacity, OKLab mixing, and lightness utilities. Keep the composition preset free of runtime imports and make its core peer optional for color-only consumers.
+
+### Patch Changes
+
+- @hulla/style@1.1.0
+
 ## 1.0.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@hulla/style-native",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Typed React Native style composition and variants for the @hulla/style ecosystem",
   "author": "Samuel Hulla <hulla@hulla.dev>",
   "homepage": "https://hulla.dev/docs/style/native",

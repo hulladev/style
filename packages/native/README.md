@@ -6,7 +6,7 @@ the core owns `cn`, `vn`, and variant inference. The preset contains an identity
 `serializer` and a native `composer` for the existing configuration hooks. It has no
 runtime imports; React Native supplies its style types.
 
-Requires `@hulla/style` 1.0.1 or later, before 2.0, and React Native 0.81 or later,
+Requires `@hulla/style` 1.1.0 or later, before 2.0, and React Native 0.81 or later,
 before 1.0. Typed usage requires TypeScript 5.4 or later.
 
 Install both packages in the native app:
