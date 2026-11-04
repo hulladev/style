@@ -1,5 +1,12 @@
 # @hulla/style-native
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [cf46bf2]
+  - @hulla/style@1.0.1
+
 ## 1.0.0
 
 ### Minor Changes

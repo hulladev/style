@@ -1,0 +1,17 @@
+{
+  "repository": "hulladev/style",
+  "version": "1.0.1",
+  "tag": "v1.0.1",
+  "packages": [
+    {
+      "name": "@hulla/style",
+      "version": "1.0.1",
+      "directory": "packages/style"
+    },
+    {
+      "name": "@hulla/style-native",
+      "version": "1.0.1",
+      "directory": "packages/native"
+    }
+  ]
+}
